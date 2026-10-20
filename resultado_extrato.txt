@@ -1,0 +1,89 @@
+==============================================================
+                    EXTRATO BANCÁRIO
+==============================================================
+
+Movimentação 01
+Data      : 01/10/2026
+Valor     : R$ 4.500,00
+Descrição : RECEBIMENTO CLIENTE ACME LTDA
+--------------------------------------------------------------
+Movimentação 02
+Data      : 01/10/2026
+Valor     : R$ -850,00
+Descrição : ALUGUEL ESCRITORIO
+--------------------------------------------------------------
+Movimentação 03
+Data      : 02/10/2026
+Valor     : R$ -329,90
+Descrição : ENERGIA ELETRICA
+--------------------------------------------------------------
+Movimentação 04
+Data      : 03/10/2026
+Valor     : R$ -189,90
+Descrição : INTERNET EMPRESA
+--------------------------------------------------------------
+Movimentação 05
+Data      : 04/10/2026
+Valor     : R$ 2.750,00
+Descrição : PAGAMENTO CLIENTE DELTA INDUSTRIA
+--------------------------------------------------------------
+Movimentação 06
+Data      : 05/10/2026
+Valor     : R$ -450,00
+Descrição : MATERIAL ESCRITORIO
+--------------------------------------------------------------
+Movimentação 07
+Data      : 06/10/2026
+Valor     : R$ -2.100,00
+Descrição : FOLHA PAGAMENTO
+--------------------------------------------------------------
+Movimentação 08
+Data      : 07/10/2026
+Valor     : R$ 5.200,00
+Descrição : RECEBIMENTO CONTRATO CONSULTORIA
+--------------------------------------------------------------
+Movimentação 09
+Data      : 08/10/2026
+Valor     : R$ -120,00
+Descrição : ESTACIONAMENTO CLIENTES
+--------------------------------------------------------------
+Movimentação 10
+Data      : 09/10/2026
+Valor     : R$ -980,00
+Descrição : COMPRA EQUIPAMENTOS TI
+--------------------------------------------------------------
+Movimentação 11
+Data      : 10/10/2026
+Valor     : R$ 1.800,00
+Descrição : PIX CLIENTE OMEGA
+--------------------------------------------------------------
+Movimentação 12
+Data      : 12/10/2026
+Valor     : R$ -59,90
+Descrição : ASSINATURA CLOUD STORAGE
+--------------------------------------------------------------
+Movimentação 13
+Data      : 13/10/2026
+Valor     : R$ -670,00
+Descrição : MANUTENCAO VEICULO
+--------------------------------------------------------------
+Movimentação 14
+Data      : 14/10/2026
+Valor     : R$ 3.650,00
+Descrição : RECEBIMENTO PROJETO WEB
+--------------------------------------------------------------
+Movimentação 15
+Data      : 15/10/2026
+Valor     : R$ -310,00
+Descrição : MATERIAL LIMPEZA
+--------------------------------------------------------------
+
+RESUMO FINANCEIRO
+==============================================================
+Quantidade total de movimentações: 15
+Total de entradas               : R$ 17.900,00
+Total de saídas                 : R$ -6.059,70
+Saldo calculado                 : R$ 11.840,30
+
+Observação: saldo calculado = entradas + saídas do período;
+pode ser diferente do saldo final informado pelo banco.
