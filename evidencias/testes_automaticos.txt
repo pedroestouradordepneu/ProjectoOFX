@@ -1,0 +1,23 @@
+Execução local com Python e testes unittest.
+O leitor básico de reserva foi usado porque a biblioteca ofxparse não pôde ser instalada no ambiente de testes sem acesso à internet.
+Banco PostgreSQL real não foi testado; teste de duplicatas usa banco simulado.
+
+Aviso: ofxparse indisponível; utilizando leitor básico de OFX bancário. Para leitura completa, instale: pip install -r requirements.txt
+test_chave_consistente_entre_importacoes (test_projeto.ProjetoOFXTestes.test_chave_consistente_entre_importacoes) ... Aviso: ofxparse indisponível; utilizando leitor básico de OFX bancário. Para leitura completa, instale: pip install -r requirements.txt
+ok
+test_csv (test_projeto.ProjetoOFXTestes.test_csv) ... ok
+test_estrutura_campos (test_projeto.ProjetoOFXTestes.test_estrutura_campos) ... ok
+test_extrato_inexistente_retorna_erro (test_projeto.ProjetoOFXTestes.test_extrato_inexistente_retorna_erro) ... ERRO: Arquivo OFX não encontrado: [PASTA_TEMP]/nao_existe.ofx
+ok
+test_extrato_invalido (test_projeto.ProjetoOFXTestes.test_extrato_invalido) ... ok
+test_formatacao_valores (test_projeto.ProjetoOFXTestes.test_formatacao_valores) ... ok
+test_movimentacoes_sem_fitid_repetidas (test_projeto.ProjetoOFXTestes.test_movimentacoes_sem_fitid_repetidas) ... ok
+test_quantidade_movimentacoes (test_projeto.ProjetoOFXTestes.test_quantidade_movimentacoes) ... ok
+test_reimportacao_ignora_duplicatas_postgres (test_projeto.ProjetoOFXTestes.test_reimportacao_ignora_duplicatas_postgres) ... ok
+test_relatorio_exibe_resumo (test_projeto.ProjetoOFXTestes.test_relatorio_exibe_resumo) ... ok
+test_totais_extrato_fornecido (test_projeto.ProjetoOFXTestes.test_totais_extrato_fornecido) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.004s
+
+OK
