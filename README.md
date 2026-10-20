@@ -25,7 +25,7 @@ Para importar no PostgreSQL, configuro meu `.env` a partir do `.env.example` e e
 python main.py --postgres
 ```
 
-Confiro os registros no DBeaver com `consultas_dbeaver.sql`.
+Conferi os registros no PostgreSQL do Neon.
 
 ## Testes
 
@@ -35,4 +35,4 @@ Executo:
 python -m unittest discover -s tests -v
 ```
 
-Validei os 11 testes automatizados. Ainda não validei a conexão com PostgreSQL real.
+Validei os 11 testes automatizados e os 15 registros armazenados no PostgreSQL, sem duplicatas.
