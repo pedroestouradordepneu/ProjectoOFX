@@ -1,0 +1,49 @@
+name: Organizar ProjetoOFX
+on:
+  push:
+    paths:
+      - .github/workflows/organizar.yml
+permissions:
+  contents: write
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Recuperar projeto e commits
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          from zipfile import ZipFile
+
+          destino = Path(os.environ["RUNNER_TEMP"]) / "ProjetoOFX"
+          with ZipFile("ProjetoOFX.zip") as arquivo:
+              for membro in arquivo.infolist():
+                  partes = Path(membro.filename).parts
+                  if not partes or partes[0] != "ProjetoOFX":
+                      continue
+                  relativa = Path(*partes[1:])
+                  if not relativa.parts or ".." in relativa.parts:
+                      continue
+                  alvo = destino / relativa
+                  if membro.is_dir():
+                      alvo.mkdir(parents=True, exist_ok=True)
+                  else:
+                      alvo.parent.mkdir(parents=True, exist_ok=True)
+                      alvo.write_bytes(arquivo.read(membro))
+          PY
+          git config user.name "Pedro Henrique Breda Domingues"
+          git config user.email "264032372+pedroestouradordepneu@users.noreply.github.com"
+          git remote add pacote "$RUNNER_TEMP/ProjetoOFX"
+          git fetch pacote main
+          git rev-list --reverse FETCH_HEAD > "$RUNNER_TEMP/commits.txt"
+          while read -r commit; do
+            git cherry-pick --allow-empty "$commit"
+          done < "$RUNNER_TEMP/commits.txt"
+          git rm -- ProjetoOFX.zip .github/workflows/organizar.yml
+          git commit -m "fix: organizar arquivos do ProjetoOFX"
+          git push origin HEAD:main
