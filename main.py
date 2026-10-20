@@ -1,11 +1,4 @@
-"""ProjetoOFX: leitura de extrato, relatório financeiro e integração PostgreSQL.
 
-Executar:
-    python main.py
-    python main.py --salvar resultado_extrato.txt
-    python main.py --postgres
-    python main.py --csv movimentacoes.csv
-"""
 
 from __future__ import annotations
 
@@ -23,7 +16,6 @@ from leitor_ofx import ler_ofx
 
 PASTA_PROJETO = Path(__file__).resolve().parent
 
-
 @dataclass(frozen=True)
 class Movimentacao:
     data: date
@@ -31,9 +23,8 @@ class Movimentacao:
     descricao: str
     chave_unica: str
 
-
 def importar_movimentacoes(caminho: str | Path) -> list[Movimentacao]:
-    """Extrai, transforma e identifica movimentações do extrato OFX."""
+
     ofx = ler_ofx(caminho)
     conta = getattr(ofx, "account", None)
     if conta is None or getattr(conta, "statement", None) is None:
@@ -64,8 +55,7 @@ def importar_movimentacoes(caminho: str | Path) -> list[Movimentacao]:
         if identificador:
             base_identidade = f"{referencia_conta}|FITID|{identificador}"
         else:
-            # Alternativa quando o banco não informa FITID: distingue operações
-            # idênticas dentro de um mesmo extrato e evita reinserção do arquivo.
+
             assinatura = f"{data_movimentacao}|{valor}|{descricao}"
             ocorrencias_sem_fitid[assinatura] += 1
             base_identidade = (
@@ -83,19 +73,16 @@ def importar_movimentacoes(caminho: str | Path) -> list[Movimentacao]:
 
     return movimentacoes
 
-
 def calcular_totais(movimentacoes: list[Movimentacao]) -> tuple[Decimal, Decimal, Decimal]:
     entradas = sum((m.valor for m in movimentacoes if m.valor > 0), Decimal("0.00"))
     saidas = sum((m.valor for m in movimentacoes if m.valor < 0), Decimal("0.00"))
     return entradas, saidas, entradas + saidas
 
-
 def moeda(valor: Decimal) -> str:
-    """Formata valores como R$ 1.234,56 ou R$ -1.234,56."""
+
     sinal = "-" if valor < 0 else ""
     numero = f"{abs(valor):,.2f}".replace(",", "§").replace(".", ",").replace("§", ".")
     return f"R$ {sinal}{numero}"
-
 
 def gerar_relatorio(movimentacoes: list[Movimentacao]) -> str:
     linhas = ["=" * 62, "                    EXTRATO BANCÁRIO", "=" * 62, ""]
@@ -119,9 +106,8 @@ def gerar_relatorio(movimentacoes: list[Movimentacao]) -> str:
     ])
     return "\n".join(linhas) + "\n"
 
-
 def exportar_csv(movimentacoes: list[Movimentacao], caminho: str | Path) -> None:
-    """Exportação extra, compatível com planilhas configuradas para pt-BR."""
+
     with Path(caminho).open("w", encoding="utf-8-sig", newline="") as arquivo:
         escritor = csv.writer(arquivo, delimiter=";")
         escritor.writerow(["Data", "Valor", "Descrição"])
@@ -131,7 +117,6 @@ def exportar_csv(movimentacoes: list[Movimentacao], caminho: str | Path) -> None
                 f"{mov.valor:.2f}".replace(".", ","),
                 mov.descricao,
             ])
-
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
@@ -175,10 +160,9 @@ def main(argv: list[str] | None = None) -> int:
         print(f"ERRO: {erro}", file=sys.stderr)
         return 1
     except Exception as erro:
-        # Banco de dados pode retornar exceções específicas de conexão/SQL.
+
         print(f"ERRO ao processar o extrato: {erro}", file=sys.stderr)
         return 1
-
 
 if __name__ == "__main__":
     raise SystemExit(main())

@@ -1,4 +1,4 @@
-"""Testes automáticos sem PostgreSQL e sem conexão externa."""
+
 
 import tempfile
 import unittest
@@ -21,7 +21,6 @@ from main import (
 )
 
 PASTA = Path(__file__).resolve().parents[1]
-
 
 class CursorFalso:
     def __init__(self, banco):
@@ -50,7 +49,6 @@ class CursorFalso:
     def fetchone(self):
         return (self.ultimo_id,) if self.ultimo_id is not None else None
 
-
 class ConexaoFalsa:
     def __init__(self):
         self.banco = set()
@@ -64,7 +62,6 @@ class ConexaoFalsa:
 
     def cursor(self):
         return self.cursor_falso
-
 
 class ProjetoOFXTestes(unittest.TestCase):
     @classmethod
@@ -132,7 +129,7 @@ class ProjetoOFXTestes(unittest.TestCase):
                 importar_movimentacoes(arquivo)
 
     def test_movimentacoes_sem_fitid_repetidas(self):
-        # Simula OFX bancário com duas compras idênticas sem FITID.
+
         texto = '''OFXHEADER:100
 DATA:OFXSGML
 VERSION:102
@@ -150,13 +147,11 @@ VERSION:102
         with tempfile.TemporaryDirectory() as pasta:
             arquivo = Path(pasta) / "sem_fitid.ofx"
             arquivo.write_text(texto, encoding="utf-8")
-            # Garante que este cenário testa o fallback especificamente,
-            # independentemente de ofxparse estar instalado na máquina.
+
             with patch("main.ler_ofx", side_effect=lambda p: _ler_sem_biblioteca(Path(p))):
                 movimentos = importar_movimentacoes(arquivo)
             self.assertEqual(len(movimentos), 2)
             self.assertNotEqual(movimentos[0].chave_unica, movimentos[1].chave_unica)
-
 
 if __name__ == "__main__":
     unittest.main()

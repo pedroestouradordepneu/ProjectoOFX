@@ -1,9 +1,4 @@
-"""Leitura de extratos bancários OFX com ofxparse e compatibilidade offline.
 
-O leitor principal é a biblioteca ofxparse, como exigido na atividade.
-O leitor reserva atende OFX bancários comuns (SGML/XML) quando a biblioteca
-não está disponível no ambiente, útil para testes sem conexão com a internet.
-"""
 
 from __future__ import annotations
 
@@ -15,14 +10,12 @@ from html import unescape
 from pathlib import Path
 from types import SimpleNamespace
 
-
 def _campo(bloco: str, nome: str) -> str:
     encontrado = re.search(rf"<{re.escape(nome)}\s*>\s*([^\r\n<]*)", bloco, re.I)
     return unescape(encontrado.group(1).strip()) if encontrado else ""
 
-
 def _ler_sem_biblioteca(caminho: Path):
-    """Leitor simplificado para extratos OFX bancários, não investimentos."""
+
     dados = caminho.read_bytes()
     try:
         texto = dados.decode("utf-8-sig")
@@ -54,7 +47,6 @@ def _ler_sem_biblioteca(caminho: Path):
             id=_campo(bloco, "FITID"),
         ))
 
-    # Ler dados bancários só para gerar uma chave de duplicidade consistente.
     conta = SimpleNamespace(
         account_id=_campo(texto, "ACCTID"),
         routing_number=_campo(texto, "BANKID"),
@@ -63,14 +55,12 @@ def _ler_sem_biblioteca(caminho: Path):
     )
     return SimpleNamespace(account=conta)
 
-
 def ler_ofx(caminho: str | Path):
-    """Utiliza OfxParser.parse quando instalado; fallback para OFX bancário."""
+
     caminho = Path(caminho)
     if not caminho.is_file():
         raise FileNotFoundError(f"Arquivo OFX não encontrado: {caminho}")
-    # Mensagem clara também com ofxparse instalado: evita tentar analisar
-    # arquivos arbitrários como se fossem extratos bancários.
+
     with caminho.open("rb") as arquivo:
         cabecalho = arquivo.read(4096).upper()
     if b"<OFX" not in cabecalho:

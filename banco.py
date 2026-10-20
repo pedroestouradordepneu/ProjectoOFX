@@ -1,4 +1,4 @@
-"""Carga ETL em PostgreSQL com deduplicação por identificador SHA-256."""
+
 
 from __future__ import annotations
 
@@ -17,15 +17,10 @@ ON CONFLICT (chave_unica) DO NOTHING
 RETURNING id;
 """
 
-
 def gravar_movimentacoes(
     movimentacoes: list[Movimentacao], conexao=None
 ) -> tuple[int, int]:
-    """Insere registros e retorna (novos, duplicados).
 
-    Se conexao não for informada, lê .env e estabelece uma conexão real.
-    Uma transação SQL é confirmada integralmente ou desfeita se houver erro.
-    """
     propria_conexao = conexao is None
     if propria_conexao:
         try:
